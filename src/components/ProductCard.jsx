@@ -56,7 +56,7 @@ const ZonCards = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 p-4 relative">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-4 relative">
       {loading ? (
         <div className="absolute right-[50%] top-10 transform translate-x-1/2">
           <VscLoading className="animate-spin text-5xl text-blue-500" />
