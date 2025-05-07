@@ -59,7 +59,7 @@ const Navbar = () => {
           <a href="#">Контакты</a>
         </div>
         <div className="text-black font-bold flex items-center gap-2 whitespace-nowrap text-xs md:text-sm">
-          <LocalPhone fontSize="small" /> +998-78 555-35-00
+          <LocalPhone fontSize="small" /> <a href="tel:+998-78 555-35-00">+998-78 555-35-00</a>
         </div>
       </div>
 
