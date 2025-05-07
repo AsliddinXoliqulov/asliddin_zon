@@ -10,7 +10,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <LikeProvider>
       <CartProvider>
-        <App />
+       <div className="max-w-[1400px] m-auto"> <App /></div>
       </CartProvider>
     </LikeProvider>
   </React.StrictMode>

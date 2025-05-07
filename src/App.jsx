@@ -6,7 +6,7 @@ import Footer from './components/Footer';
 const Home = lazy(() => import('./pages/Home'));
 const Cart = lazy(() => import('./pages/Cart'));
 const Like = lazy(() => import('./pages/Like'));
-const Admin = lazy(() => import('./pages/Admin'));
+const Admin = lazy(() => import('./pages/Admin')); 
 
 function App() {
   return (
@@ -17,26 +17,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/like" element={<Like />} />
-          <Route path="/Admin" element={<Admin />} />
+          <Route path="/admin" element={<Admin />} /> 
         </Routes>
-      <Footer />
       </Suspense>
+      <Footer />
     </BrowserRouter>
   );
 }
 
 export default App;
-
-
-// import React from 'react';
-// import ReactDOM from 'react-dom/client';
-// import App from './App';
-// import './index.css';
-// import { BrowserRouter } from 'react-router-dom';
-
-// const root = ReactDOM.createRoot(document.getElementById('root'));
-// root.render(
-//   <BrowserRouter>
-//     <App />
-//   </BrowserRouter>
-// );

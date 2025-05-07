@@ -1,15 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
-  LocationOn, Search, ShoppingCart, Favorite, Clear, Menu,
-  BusinessCenter, Handshake, Window, Public, LocalPhone
-} from '@mui/icons-material';
+  LocationOn,
+  Search,
+  ShoppingCart,
+  Favorite,
+  Clear,
+  Menu,
+  BusinessCenter,
+  Handshake,
+  Window,
+  Public,
+  LocalPhone,
+} from "@mui/icons-material";
 
-import logo from '../assets/logo.png';
-import menuright from '../assets/mrnuright.png';
+import logo from "../assets/logo.png";
+import menuright from "../assets/mrnuright.png";
 
 const Navbar = () => {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [likesCount, setLikesCount] = useState(0);
   const [cartCount, setCartCount] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -18,17 +27,17 @@ const Navbar = () => {
 
   useEffect(() => {
     fetch(`${BASE_URL}/ZonCards`)
-      .then(response => response.json())
-      .then(data => {
-        const likedItems = data.filter(item => item.liked);
+      .then((response) => response.json())
+      .then((data) => {
+        const likedItems = data.filter((item) => item.liked);
         setLikesCount(likedItems.length);
       });
   }, [BASE_URL]);
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
     setCartCount(cart.length);
-  }, []); 
+  }, []);
 
   return (
     <div className="w-full shadow-sm border-b border-gray-200 text-sm font-sans">
@@ -36,7 +45,9 @@ const Navbar = () => {
         <div className="hidden md:flex flex-wrap items-center gap-3">
           <span className="flex items-center gap-1">
             <LocationOn fontSize="small" />
-            <a href="#" className="underline text-[#007aff]">Toshkent</a>
+            <a href="#" className="underline text-[#007aff]">
+              Toshkent
+            </a>
           </span>
           <a href="#" className="flex items-center gap-1">
             <Handshake fontSize="small" /> Продавайте на Zon.uz
@@ -78,7 +89,7 @@ const Navbar = () => {
 
         <div className="hidden md:flex items-center gap-4">
           <Link to="/cart" className="relative">
-            <ShoppingCart fontSize="medium" color='action' />
+            <ShoppingCart fontSize="medium" color="action" />
             {cartCount > 0 && (
               <span className="absolute -top-1 -right-2 bg-red-600 text-white text-xs px-1 rounded-full">
                 {cartCount}
@@ -86,7 +97,7 @@ const Navbar = () => {
             )}
           </Link>
           <Link to="/like" className="relative">
-            <Favorite fontSize="medium" color='action' />
+            <Favorite fontSize="medium" color="action" />
             {likesCount > 0 && (
               <span className="absolute -top-1 -right-2 bg-red-600 text-white text-xs px-1 rounded-full">
                 {likesCount}
@@ -104,7 +115,10 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="md:hidden">
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="md:hidden"
+        >
           <Menu fontSize="medium" />
         </button>
       </div>
@@ -115,13 +129,11 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Найти товары"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
               className="px-3 py-1 text-sm outline-none flex-1"
             />
-            <button className="px-4 bg-[#d3d8de] flex items-center justify-center">
-              <Search fontSize="small" />
-            </button>
+              <button className="px-4 bg-[#d3d8de] flex items-center justify-center">
+                <Search fontSize="small" />
+              </button>
           </div>
           <div className="flex items-center gap-4">
             <Link to="/cart" className="relative">
@@ -140,9 +152,11 @@ const Navbar = () => {
                 </span>
               )}
             </Link>
+            <Link to="/admin">
             <button className="bg-[#3b61dd] hover:bg-[#3252c2] text-white text-sm px-4 py-1 rounded">
               Войти
             </button>
+            </Link>
           </div>
         </div>
       )}

@@ -87,7 +87,7 @@ const Like = () => {
               return (
                 <div
                   key={card.id}
-                  className="shadow-md rounded-2xl p-3 relative hover:shadow-lg transition duration-300 max-w-60"
+                  className="shadow-md rounded-2xl p-3 relative hover:shadow-lg transition duration-300 sm:max-w-60"
                 >
                   {card.sale && (
                     <span className="absolute bottom-16 left-2 bg-red-200 text-red-500 text-xs px-2 py-0.5 rounded-2xl font-bold">
