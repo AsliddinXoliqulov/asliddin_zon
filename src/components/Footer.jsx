@@ -32,7 +32,7 @@ const Footer = () => {
         </div>
         <div className="rounded-xl w-64 h-96">
           <img className="rounded-2xl w-full pb-3" src={pop4} alt="" />
-          <h4 className="text-blue-400 text-sm my-1 px-4">14.16.2022</h4>
+          <h4 className="text-blue-950 text-sm my-1 px-4">14.16.2022</h4>
           <p className="px-3 pb-3">
             Люксометр - Измеритель яркости и освещённости
           </p>

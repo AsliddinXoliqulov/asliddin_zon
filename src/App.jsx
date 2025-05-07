@@ -6,16 +6,18 @@ import Footer from './components/Footer';
 const Home = lazy(() => import('./pages/Home'));
 const Cart = lazy(() => import('./pages/Cart'));
 const Like = lazy(() => import('./pages/Like'));
+const Admin = lazy(() => import('./pages/Admin'));
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <Suspense fallback={<div>Yuklanmoqda...</div>}>
+      <Suspense fallback={<div className='text-center mt-10 text-2xl font-bold'>Yuklanmoqda...</div>}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/like" element={<Like />} />
+          <Route path="/Admin" element={<Admin />} />
         </Routes>
       <Footer />
       </Suspense>

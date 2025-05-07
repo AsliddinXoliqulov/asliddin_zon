@@ -98,7 +98,9 @@ const Navbar = () => {
           </Link>
           <span className='items-center gap-2 text-gray-500 px-2 py-0.5 border-2 rounded-md hidden lg:flex border-gray-300'><Public/> <b>UZ</b></span>
           <img className='w-6' src={menuright} alt="" />
-          <button className="bg-[#3b61dd] hover:bg-[#3252c2] text-white text-sm px-4 py-1 rounded">Войти</button>
+          <Link to="/Admin">
+            <button className="bg-[#3b61dd] hover:bg-[#3252c2] text-white text-sm px-4 py-1 rounded">Войти</button>
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}

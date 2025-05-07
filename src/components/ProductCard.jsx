@@ -9,7 +9,6 @@ const ZonCards = () => {
   const [loading, setLoading] = useState(true);
   const [cartItems, setCartItems] = useState([]);
 
-  // Ma'lumotlar birinchi marta yuklanishda (localStorage'dan) olingan
   useEffect(() => {
     const apiUrl = import.meta.env.VITE_API_URL;
     axios
@@ -23,22 +22,20 @@ const ZonCards = () => {
         setLoading(false);
       });
 
-    // localStorage'dan saqlangan korzinka itemlarini olish
     const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
     setCartItems(savedCart);
   }, []);
 
-  // Kartani localStorage'ga saqlash va state'ni yangilash
   const addToCart = (card) => {
     const isAlreadyInCart = cartItems.some((item) => item.id === card.id);
     if (!isAlreadyInCart) {
-      const updatedCart = [...cartItems, card];
+      const newCard = { ...card, count: 1 }; // count: 1 qo‘shildi
+      const updatedCart = [...cartItems, newCard];
       setCartItems(updatedCart);
-      localStorage.setItem("cart", JSON.stringify(updatedCart));  // Saqlash
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
     }
   };
 
-  // "Like" tugmasini faollashtirish/oxirgi holatini yangilash
   const toggleLike = async (id, currentLiked) => {
     try {
       const updated = { liked: !currentLiked };
@@ -56,7 +53,7 @@ const ZonCards = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-4 relative">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 p-4 relative">
       {loading ? (
         <div className="absolute right-[50%] top-10 transform translate-x-1/2">
           <VscLoading className="animate-spin text-5xl text-blue-500" />
@@ -69,10 +66,10 @@ const ZonCards = () => {
           return (
             <div
               key={card.id}
-              className="bg-gray-50 shadow-md rounded-2xl p-3 relative hover:shadow-lg transition duration-300"
+              className="shadow-md rounded-2xl p-3 relative hover:shadow-lg transition duration-300 max-w-60"
             >
               {card.sale && (
-                <span className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
+                <span className="absolute bottom-16 left-2 bg-red-200 text-red-500 text-xs px-2 py-0.5 rounded-2xl font-bold">
                   Нет в наличии
                 </span>
               )}
@@ -81,13 +78,17 @@ const ZonCards = () => {
                 alt={card.title}
                 className="w-full h-48 rounded-t-2xl object-contain mb-2"
               />
-              <h2 className="text-sm font-semibold mb-1 line-clamp-2">
+              <h2 className="text-sm font-medium text-gray-500 mb-1 line-clamp-2 h-5">
                 {card.title}
               </h2>
-              <p className="text-base font-bold text-green-600">
-                {card.price.toLocaleString("ru-RU")} so'm
-              </p>
-              <div className="flex justify-between items-center mt-2">
+              <div className="w-full h-5"></div>
+              <div className="flex justify-between items-center">
+                <span className="mt-5">
+                  <p className="text-base font-bold">
+                    {card.price.toLocaleString("ru-RU")} so'm
+                  </p>
+                  <p className=" text-sm text-gray-400 line-through">250 000</p>
+                </span>
                 <button
                   className={`text-[#1bc5bd] bg-white text-2xl border border-gray-400 w-9 h-9 rounded-full flex items-center justify-center ${
                     isDisabled
@@ -99,13 +100,15 @@ const ZonCards = () => {
                 >
                   <MdOutlineAddShoppingCart />
                 </button>
-                <button 
-                  className={`${card.liked ? "text-red-500" : "text-gray-400"} absolute top-2 right-2`}
-                  onClick={() => toggleLike(card.id, card.liked)}
-                >
-                  <Heart fill={card.liked ? "red" : "none"} />
-                </button>
               </div>
+              <button
+                className={`${
+                  card.liked ? "text-red-500" : "text-[#f1f1f1]"
+                } absolute top-2 right-2`}
+                onClick={() => toggleLike(card.id, card.liked)}
+              >
+                <Heart fill={card.liked ? "red" : "#f1f1f1"} />
+              </button>
             </div>
           );
         })

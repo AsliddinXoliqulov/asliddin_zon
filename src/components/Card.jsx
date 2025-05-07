@@ -1,60 +1,122 @@
-import React, { useEffect, useState } from 'react';
-import { Minus, Plus, Trash } from 'lucide-react';
+import React, { useEffect, useState } from "react";
+import { Minus, Plus, Trash } from "lucide-react";
+import { Link } from "react-router-dom";
+// import { Button } from "@mui/material";
 
 const Cart = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const stored = localStorage.getItem('cartItems');
+    const stored = localStorage.getItem("cart");
     if (stored) {
       try {
-        setItems(JSON.parse(stored));
+        const parsed = JSON.parse(stored);
+        // Har bir itemga count bo‘lmasa 1 qilib qo‘shamiz
+        const withCount = parsed.map((item) => ({
+          ...item,
+          count: item.count || 1,
+        }));
+        setItems(withCount);
       } catch (e) {
         console.error("Cart items could not be parsed:", e);
       }
     }
   }, []);
 
-  const removeItem = (id) => {
-    const updated = items.filter((item) => item.id !== id);
-    setItems(updated);
-    localStorage.setItem('cartItems', JSON.stringify(updated));
+  const updateStorage = (updatedItems) => {
+    setItems(updatedItems);
+    localStorage.setItem("cart", JSON.stringify(updatedItems));
   };
 
-  const totalPrice = items.reduce((sum, item) => sum + item.price, 0);
+  const increment = (id) => {
+    const updated = items.map((item) =>
+      item.id === id ? { ...item, count: item.count + 1 } : item
+    );
+    updateStorage(updated);
+  };
+
+  const decrement = (id) => {
+    const updated = items
+      .map((item) =>
+        item.id === id ? { ...item, count: item.count - 1 } : item
+      )
+      .filter((item) => item.count > 0);
+    updateStorage(updated);
+  };
+
+  const removeItem = (id) => {
+    const updated = items.filter((item) => item.id !== id);
+    updateStorage(updated);
+  };
+
+  const totalPrice = items.reduce(
+    (sum, item) => sum + item.price * item.count,
+    0
+  );
 
   return (
     <div className="flex flex-col md:flex-row justify-between gap-6 p-6 bg-white rounded-xl shadow-md">
       {/* Mahsulotlar qismi */}
       <div className="flex-1 border-2 border-gray-300 p-4 rounded-xl">
-        <h2 className="text-lg font-semibold mb-4">Корзина</h2>
-
         {items.length === 0 ? (
-          <p className="text-gray-600">Корзина пустая</p>
+          <div className=" flex items-center justify-center text-center w-full">
+            <div className="max-w-[500px] w-full rounded px-5 py-5">
+              <h1 className="text-2xl font-black text-gray-600">
+              Корзина пустой
+              </h1>
+              <p className="my-5 font-bold text-xl text-gray-600">
+                Нет выбранных продуктов
+              </p>
+              <Link to="/">
+                <button className="bg-[#6682a9] rounded text-white w-full py-2 hover:bg-[#4f6c94]">
+                  На главную
+                </button>
+              </Link>
+            </div>
+          </div>
         ) : (
           items.map((item) => (
-            <div key={item.id} className="flex items-center gap-4 mb-4 border-b pb-4">
-              <img
-                src={item.img}
-                alt={item.title}
-                className="w-24 h-24 object-contain"
-              />
-              <div className="flex-1">
-                <p className="font-semibold">{item.title}</p>
-                <p className="text-lg font-bold mt-1">{item.price.toLocaleString()} сум</p>
+            <div
+              key={item.id}
+              className="lg:grid grid-cols-[3fr_1fr] items-center gap-4 mb-4 border-b pb-4"
+            >
+              <div className="flex gap-5 items-center">
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  className="w-24 h-24 object-contain"
+                />
+                <div className="flex-1">
+                  <p className="font-semibold">{item.title}</p>
+                  <p className="text-lg font-bold mt-1">
+                    {(item.price * item.count).toLocaleString()} сум
+                  </p>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <button className="text-red-600 border rounded-full w-8 h-8 flex items-center justify-center">
+              <div className="flex items-center gap-5 mt-10 lg:mt-0 ml-10 lg:ml-0">
+                <button
+                  onClick={() => decrement(item.id)}
+                  disabled={item.count === 1} // Disable when count is 1
+                  className={`text-red-600 border rounded-full w-6 h-6 flex items-center justify-center ${
+                    item.count === 1 ? "bg-gray-300  cursor-not-allowed" : ""
+                  }`}
+                >
                   <Minus size={16} />
                 </button>
-                <span className="text-lg font-medium">1</span>
-                <button className="text-green-600 border rounded-full w-8 h-8 flex items-center justify-center">
+                <span className="text-lg font-medium">{item.count}</span>
+                <button
+                  onClick={() => increment(item.id)}
+                  className="text-green-600 border rounded-full w-6 h-6 flex items-center justify-center"
+                >
                   <Plus size={16} />
                 </button>
+                <button
+                  className="text-red-600 ml-4"
+                  onClick={() => removeItem(item.id)}
+                >
+                  <Trash />
+                </button>
               </div>
-              <button className="text-red-600 ml-4" onClick={() => removeItem(item.id)}>
-                <Trash />
-              </button>
             </div>
           ))
         )}
@@ -71,13 +133,26 @@ const Cart = () => {
           <span className="text-green-600">бесплатно</span>
         </div>
         <p className="text-xs text-gray-600 mb-4">
-          Для заказа товаров требуется регистрация. Если вы уже зарегистрированы, войдите в свою учетную запись.
+          Для заказа товаров требуется регистрация. Если вы уже
+          зарегистрированы, войдите в свою учетную запись.
         </p>
-        <button className="bg-blue-600 text-white w-full py-2 rounded hover:bg-blue-700 transition">
-          Заказать
-        </button>
+        <Link to="/" className="">
+          <button
+            onClick={() => localStorage.removeItem("cart")}
+            className="bg-[#6682a9] text-white w-full py-2 rounded hover:bg-[#4f6c94] transition"
+          >
+            Заказать
+          </button>
+        </Link>
         <p className="text-xs text-gray-600 mt-2">
-          ✓ Согласен с условиями <a href="#" className="underline">Правил пользования</a> и <a href="#" className="underline">правилами возврата</a>
+          ✓ Согласен с условиями{" "}
+          <a href="#" className="underline">
+            Правил пользования
+          </a>{" "}
+          и{" "}
+          <a href="#" className="underline">
+            правилами возврата
+          </a>
         </p>
       </div>
     </div>
