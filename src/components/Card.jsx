@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Minus, Plus, Trash } from "lucide-react";
 import { Link } from "react-router-dom";
-// import { Button } from "@mui/material";
 
 const Cart = () => {
   const [items, setItems] = useState([]);
@@ -11,7 +10,6 @@ const Cart = () => {
     if (stored) {
       try {
         const parsed = JSON.parse(stored);
-        // Har bir itemga count bo‘lmasa 1 qilib qo‘shamiz
         const withCount = parsed.map((item) => ({
           ...item,
           count: item.count || 1,
@@ -56,7 +54,6 @@ const Cart = () => {
 
   return (
     <div className="flex flex-col md:flex-row justify-between gap-6 p-6 bg-white rounded-xl shadow-md">
-      {/* Mahsulotlar qismi */}
       <div className="flex-1 border-2 border-gray-300 p-4 rounded-xl">
         {items.length === 0 ? (
           <div className=" flex items-center justify-center text-center w-full">
