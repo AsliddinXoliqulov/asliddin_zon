@@ -20,5 +20,4 @@ export const LikeProvider = ({ children }) => {
   );
 };
 
-// LikeContext-ni ishlatish uchun hook
 export const useLike = () => useContext(LikeContext);

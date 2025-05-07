@@ -5,11 +5,13 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function SwiperSlider() {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-    fetch("https://6819d4d91ac1155635069e28.mockapi.io/Imtihon/swiper")
+    fetch(`${API_URL}/swiper`)
       .then(res => res.json())
       .then(data => setImages(data))
       .catch(err => console.error("Error loading images:", err));
@@ -38,4 +40,3 @@ export default function SwiperSlider() {
     </div>
   );
 }
-

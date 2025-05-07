@@ -20,5 +20,4 @@ export const CartProvider = ({ children }) => {
   );
 };
 
-// CartContext-ni ishlatish uchun hook
 export const useCart = () => useContext(CartContext);
