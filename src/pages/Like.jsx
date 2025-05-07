@@ -11,7 +11,6 @@ const Like = () => {
   const [loading, setLoading] = useState(true);
   const [cartItems, setCartItems] = useState([]);
 
-  // Ma'lumotlarni yuklash
   useEffect(() => {
     const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -21,7 +20,6 @@ const Like = () => {
         const likedOnly = res.data.filter((card) => card.liked === true);
         setLikedCards(likedOnly);
 
-        // ✅ localStorage'ga saqlash
         localStorage.setItem("likes", JSON.stringify(likedOnly));
       } catch (err) {
         console.error("Xatolik:", err);
@@ -32,12 +30,10 @@ const Like = () => {
 
     fetchData();
 
-    // localStorage'dan korzinka elementlarini olish
     const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
     setCartItems(savedCart);
   }, []);
 
-  // Mahsulotni korzinkaga qo‘shish
   const addToCart = (card) => {
     const isAlreadyInCart = cartItems.some((item) => item.id === card.id);
     if (!isAlreadyInCart) {
@@ -47,7 +43,6 @@ const Like = () => {
     }
   };
 
-  // Yoqtirishni bekor qilish
   const toggleLike = async (id, currentLiked) => {
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
@@ -56,7 +51,6 @@ const Like = () => {
       const updatedLikedCards = likedCards.filter((card) => card.id !== id);
       setLikedCards(updatedLikedCards);
 
-      // ✅ localStorage'dagi like'larni ham yangilash
       localStorage.setItem("likes", JSON.stringify(updatedLikedCards));
     } catch (error) {
       console.error("Like o'zgartirishda xatolik:", error);

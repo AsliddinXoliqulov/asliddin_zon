@@ -93,7 +93,7 @@ const Cart = () => {
               <div className="flex items-center gap-5 mt-10 lg:mt-0 ml-10 lg:ml-0">
                 <button
                   onClick={() => decrement(item.id)}
-                  disabled={item.count === 1} // Disable when count is 1
+                  disabled={item.count === 1}
                   className={`text-red-600 border rounded-full w-6 h-6 flex items-center justify-center ${
                     item.count === 1 ? "bg-gray-300  cursor-not-allowed" : ""
                   }`}
@@ -119,7 +119,6 @@ const Cart = () => {
         )}
       </div>
 
-      {/* Umumiy narx */}
       <div className="w-full md:w-1/3 border-2 border-gray-300 p-4 rounded-xl">
         <div className="flex justify-between text-lg font-medium mb-2">
           <span>Итого</span>

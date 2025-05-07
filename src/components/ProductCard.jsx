@@ -29,7 +29,7 @@ const ZonCards = () => {
   const addToCart = (card) => {
     const isAlreadyInCart = cartItems.some((item) => item.id === card.id);
     if (!isAlreadyInCart) {
-      const newCard = { ...card, count: 1 }; // count: 1 qo‘shildi
+      const newCard = { ...card, count: 1 };
       const updatedCart = [...cartItems, newCard];
       setCartItems(updatedCart);
       localStorage.setItem("cart", JSON.stringify(updatedCart));

@@ -23,7 +23,6 @@ export default function SwiperSlider() {
         slidesPerView={1}
         loop={true}
         pagination={{ clickable: true }}
-        // navigation
         autoplay={{ delay: 1000 }}
       >
         {images.map(img => (
