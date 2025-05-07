@@ -10,27 +10,27 @@ const Footer = () => {
   return (
     <div>
       <h1 className="text-center font-black text-lg my-10">Popular</h1>
-      <div className="flex flex-wrap justify-center sm:justify-between items-center gap-5 px-[6%]">
-        <div className="rounded-xl w-64 h-96">
+      <div className="grid lg:grid-cols-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-center gap-5 px-[6%]">
+        <div className="rounded-xl sm:w-52 h-96">
           <img className="rounded-2xl w-full pb-3" src={pop1} alt="" />
           <h4 className="text-blue-400 text-sm my-1 px-4">12.05.2024</h4>
           <p className="px-3 pb-3">Виброметры для двигателей имеханизмов</p>
         </div>
-        <div className="rounded-xl w-64 h-96">
+        <div className="rounded-xl sm:w-52 h-96">
           <img className="rounded-2xl w-full pb-3" src={pop2} alt="" />
           <h4 className="text-blue-400 text-sm my-1 px-4">15.02.2025</h4>
           <p className="px-3 pb-3">
             Частотный преобразователь — что такое и для чего он нужен
           </p>
         </div>
-        <div className="rounded-xl w-64 h-96">
+        <div className="rounded-xl sm:w-52 h-96">
           <img className="rounded-2xl w-full pb-3" src={pop3} alt="" />
           <h4 className="text-blue-400 text-sm my-1 px-4">13.06.2023</h4>
           <p className="px-3 pb-3">
             Зачем нужен такой прибор, как лазерный тахометр?
           </p>
         </div>
-        <div className="rounded-xl w-64 h-96">
+        <div className="rounded-xl sm:w-52 h-96">
           <img className="rounded-2xl w-full pb-3" src={pop4} alt="" />
           <h4 className="text-blue-950 text-sm my-1 px-4">14.16.2022</h4>
           <p className="px-3 pb-3">
